@@ -1,0 +1,47 @@
+<h1>Real Time</h1>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+  var socket = io.connect('http://192.99.71.131:3000');
+    socket.on('connect', function () {
+		console.log("connected");
+      socket.on('mqtt', function (msg) {
+        console.log(msg.topic+' --- '+msg.payload);
+        $('#returntemp').append(msg.payload+"<br>");
+     });
+     socket.emit('subscribe',{topic:'test'});
+    });
+</script>
+<table class="tablegv" style="width: 500px;">
+<tbody>
+<tr class="tablegvHeader">
+<td colspan="2"><center>Status</center></td>
+</tr>
+<tr>
+<td>Return temp</td>
+<td id="returntemp"></td>
+</tr>
+</tbody>
+</table>
+
+
+
+<!-- <html>
+<head>
+  <title>test Ws mqtt.js</title>
+</head>
+<body>
+<script src="./browserMqtt.js"></script>
+<script>
+  var client = mqtt.connect() // you add a ws:// url here
+  client.subscribe("test")
+ 
+  client.on("message", function (topic, payload) {
+    alert([topic, payload].join(": "))
+    client.end()
+  })
+ 
+  //client.publish("mqtt/demo", "hello world!")
+</script> 
+</body>
+</html> -->
