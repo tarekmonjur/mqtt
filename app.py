@@ -23,24 +23,32 @@ def on_connect(client, userdata, flags, rc):
     #print("client " + str(client))
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe("DBN-Attendance-Broker")
+    client.subscribe("AttendanceBroker")
 
 
 # The callback for when a PUBLISH message is received from the ESP8266.
 def on_message(client, userdata, message):
     print("Received message '" + str(message.payload) + "' on topic '"
           + message.topic + "' with QoS " + str(message.qos))
-    if message.topic == "DBN-Attendance-Broker":
+    if message.topic == "AttendanceBroker":
         print("readings update data...")
         print(message.payload)
         jsonPayload = json.loads(message.payload)
         # print(jsonPayload)
-        print(jsonPayload['device_id'])
-        print(jsonPayload['rf_id'])
-        # '{"device_id": "0011", "rf_id": "1234"}'
-        result = requests.post('http://dbn.api/api/v1/attendances', params=jsonPayload)
-        print(result.text)
-
+        # print(jsonPayload['device_id'])
+        # print(jsonPayload['rf_id'])
+        # '{"device_id": "00001", "rf_id": "0012"}'
+        headers = {"api-token": "U7rxIBBOoTcRdrdO4lsKoTb1Vtopxyb81549424252"}
+        # print(jsonPayload)
+        # print(headers)
+        result = requests.post('http://dbn.api/api/v1/attendances', params=jsonPayload, headers=headers)
+        res = result.json()
+        if res['code'] == 200 and res['status'] == "success":
+            print(res['message'])
+        # print(res['status'])
+        # print(res['code'])
+        # print(res['title'])
+        # print(res['message'])
 
 mqttc = mqtt.Client()
 mqttc.username_pw_set("tarek", password="tarek99")
