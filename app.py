@@ -6,7 +6,7 @@ import requests
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-
+apiUrl = 'http://school.attendance/api/v1/attendances'
 
 def dict_factory(cursor, row):
     d = {}
@@ -41,7 +41,7 @@ def on_message(client, userdata, message):
         headers = {"api-token": "U7rxIBBOoTcRdrdO4lsKoTb1Vtopxyb81549424252"}
         # print(jsonPayload)
         # print(headers)
-        result = requests.post('http://dbn.api/api/v1/attendances', params=jsonPayload, headers=headers)
+        result = requests.post(apiUrl, params=jsonPayload, headers=headers)
         res = result.json()
         if res['code'] == 200 and res['status'] == "success":
             print(res['message'])
@@ -59,4 +59,4 @@ mqttc.connect("localhost", 1883, 60, "localhost")
 mqttc.loop_forever()
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8181, debug=True)
+    app.run(host='0.0.0.0', port=80, threaded=True)
