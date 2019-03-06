@@ -23,17 +23,18 @@ def on_connect(client, userdata, flags, rc):
     #print("client " + str(client))
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe("AttendanceBroker")
+    client.subscribe("SRFID")
 
 
 # The callback for when a PUBLISH message is received from the ESP8266.
 def on_message(client, userdata, message):
     print("Received message '" + str(message.payload) + "' on topic '"
           + message.topic + "' with QoS " + str(message.qos))
-    if message.topic == "AttendanceBroker":
+    if message.topic == "SRFID":
         print("readings update data...")
         print(message.payload)
-        jsonPayload = json.loads(message.payload)
+        # jsonPayload = json.loads(message.payload)
+        jsonPayload = json.loads('{"device_id": "00001", "rf_id": "'+message.payload+'"}')
         # print(jsonPayload)
         # print(jsonPayload['device_id'])
         # print(jsonPayload['rf_id'])
