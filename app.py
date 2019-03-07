@@ -1,18 +1,10 @@
 import paho.mqtt.client as mqtt
-from flask import Flask, request
 import json
 import time
 import requests
+from src import create_app
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
 apiUrl = 'http://school.attendance/api/v1/attendances'
-
-def dict_factory(cursor, row):
-    d = {}
-    for idx, col in enumerate(cursor.description):
-        d[col[0]] = row[idx]
-    return d
 
 
 # The callback for when the client receives a CONNACK response from the server.
@@ -51,13 +43,16 @@ def on_message(client, userdata, message):
         # print(res['title'])
         # print(res['message'])
 
+
+# mqtt config
 mqttc = mqtt.Client()
 mqttc.username_pw_set("tarek", password="tarek99")
 mqttc.on_connect = on_connect
 mqttc.on_message = on_message
 mqttc.connect("localhost", 1883, 60, "localhost")
-#mqttc.loop_start()
-mqttc.loop_forever()
+mqttc.loop_start()
+# mqttc.loop_forever()
+
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80, threaded=True)
+    app = create_app()
