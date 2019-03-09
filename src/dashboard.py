@@ -1,14 +1,17 @@
 
 from flask import Blueprint, request, render_template
-bp = Blueprint('/dashboard', __name__, url_prefix='/')
+app = Blueprint('/dashboard', __name__, url_prefix='/')
 
 
-@bp.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+    data = {"AppName": "WebHook"}
+    print(data)
+    return render_template('index.html', data=data)
 
 
-@bp.route('/home')
-def home():
-    return 'home page'
+@app.route('/webhook')
+def webhook():
+    data = {''}
+    return render_template('index.html', data=data)
 

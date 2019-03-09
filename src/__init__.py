@@ -9,8 +9,8 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'secret!'
 
-    app.register_blueprint(dashboard.bp)
-    app.register_blueprint(auth.bp)
+    app.register_blueprint(dashboard.app)
+    app.register_blueprint(auth.app)
 
     app.run(host='0.0.0.0', port=8000, debug=True)
     app.run(threaded=True)

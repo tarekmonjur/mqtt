@@ -1,7 +1,16 @@
 
-from flask import Blueprint, request, render_template
-bp = Blueprint('/auth', __name__, url_prefix='/')
+from flask import Blueprint, request, render_template, sessions, flash, redirect, url_for
+app = Blueprint('/auth', __name__, url_prefix='/')
 
-@bp.route('/login')
+
+@app.route('/login', methods=['GET', 'POST'])
 def index():
-    return render_template('login.html', appName='DBN')
+    # print(request.form)
+    # if request.method == 'GET':
+    data = {"appName": 'DBN'}
+    return render_template('login.html', data=data)
+
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    print('logout')
