@@ -42,10 +42,10 @@ def on_message(client, userdata, message):
         res = result.json()
         if res['code'] == 200 and res['status'] == "success":
             print(res['message'])
-            client.publish(deviceId, 1)
+            client.publish(deviceId, '1')
         else:
             print(res['message'])
-            client.publish(deviceId, 1)
+            client.publish(deviceId, '0')
 
         # print(res['status'])
         # print(res['code'])
