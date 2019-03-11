@@ -59,8 +59,8 @@ mqttc.username_pw_set("tarek", password="tarek99")
 mqttc.on_connect = on_connect
 mqttc.on_message = on_message
 mqttc.connect("localhost", 1883, 60, "localhost")
-# mqttc.loop_start()
-mqttc.loop_forever()
+mqttc.loop_start()
+# mqttc.loop_forever()
 
 
 if __name__ == "__main__":

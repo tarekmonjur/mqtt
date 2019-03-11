@@ -2,24 +2,20 @@ import mysql.connector
 from mysql.connector import Error
 
 
-def connect():
+def db_connect():
     try:
-        conn = mysql.connector.connect(host='localhost',database='dbn_attendance',user='root',password='root')
+        conn = mysql.connector.connect(host='localhost',database='attendance_webhook',user='root',password='root')
         if conn.is_connected():
-            print('Connected to MySQL database')
+            print('Connected to MySQL database.')
             return conn
+        else:
+            print('DB not Connected.')
 
     except Error as e:
-        print(e)
-
-    finally:
-        conn.close()
-
-
-def db():
-    DB = connect()
-    DB.cursor()
-    return DB
+        print('sdafasfasfaf')
+    #
+    # finally:
+    #     conn.close()
 
 
 if __name__ == '__main__':

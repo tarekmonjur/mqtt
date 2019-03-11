@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<section class="content">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="title">{{ data.title }}</h4>
+            </div>
+
+            <div class="card-body">
+                <form role="form" method="post" action="">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="sid">Student ID</label>
+                                        <input type="text" class="form-control" name="sid" id="sid"
+                                               placeholder="Enter Student ID" value="">
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="rf_id">RFID</label>
+                                        <input type="text" class="form-control" name="rf_id" id="rf_id"
+                                               placeholder="Enter RFID" value="">
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+</section>
+
+{%endblock%}
