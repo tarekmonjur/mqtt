@@ -1,12 +1,15 @@
 
 from flask import Blueprint, request, render_template
-app = Blueprint('/dashboard', __name__, url_prefix='/')
+
+app_name = "Attendance Broker"
+bp = "/dashboard"
+app = Blueprint(bp, __name__, url_prefix='/')
 
 
 @app.route('/', methods=['GET'])
 def index():
     data = {
-        "appName": "Attendance WebHook",
+        "appName": app_name,
         "title": "Dashbaord"
     }
 

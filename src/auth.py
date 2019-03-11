@@ -1,13 +1,16 @@
 
 from flask import Blueprint, request, render_template, sessions, flash, redirect, url_for
 from db import db_connect
-app = Blueprint('/auth', __name__, url_prefix='/')
+
+app_name = "Attendance Broker"
+bp = "/auth"
+app = Blueprint(bp, __name__, url_prefix='/')
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def index():
     data = {
-        "appName": "Attendance WebHook",
+        "appName": app_name,
         "title": "Log In Page"
     }
     if request.method == 'POST':

@@ -1,5 +1,7 @@
 
 from flask import Blueprint, request, render_template
+
+app_name = "Attendance Broker"
 bp = "/webhook"
 app = Blueprint(bp, __name__, url_prefix='/')
 
@@ -7,7 +9,7 @@ app = Blueprint(bp, __name__, url_prefix='/')
 @app.route(bp+'/index', methods=['GET'])
 def index():
     data = {
-        "appName": "Attendance WebHook",
+        "appName": app_name,
         "title": "Webhooks"
     }
     return render_template('webhook/index.html', data=data)
@@ -16,7 +18,7 @@ def index():
 @app.route(bp+'/add', methods=['GET'])
 def add():
     data = {
-        "appName": "Attendance WebHook",
+        "appName": app_name,
         "title": "Webhooks"
     }
     return render_template('webhook/add.html', data=data)
@@ -26,7 +28,7 @@ def add():
 def store():
     print(request.form)
     data = {
-        "appName": "Attendance WebHook",
+        "appName": app_name,
         "title": "Webhooks"
     }
     return render_template('webhook/add.html', data=data)
