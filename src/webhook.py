@@ -1,7 +1,9 @@
 
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, redirect, url_for
+from datetime import datetime
+from db import db_connect
 
-app_name = "Attendance Broker"
+app_name = "Broker & Webhook"
 bp = "/webhook"
 app = Blueprint(bp, __name__, url_prefix='/')
 
@@ -19,16 +21,28 @@ def index():
 def add():
     data = {
         "appName": app_name,
-        "title": "Webhooks"
+        "title": "Add Webhook"
     }
     return render_template('webhook/add.html', data=data)
 
 
 @app.route(bp+'/add', methods=['POST'])
 def store():
-    print(request.form)
-    data = {
-        "appName": app_name,
-        "title": "Webhooks"
-    }
-    return render_template('webhook/add.html', data=data)
+    input_data = request.form
+    print(input_data['school_name'])
+    try:
+        created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        db = db_connect()
+        cursor = db.cursor()
+        sql_query = "INSERT INTO webhooks (school_name,school_domain,api_token,api_url,created_at) values (%s,%s,%s,%s,%s)"
+        insert_tuple = (input_data['school_name'], input_data['school_domain'], input_data['api_token'], input_data['api_url'], created_at)
+        print(insert_tuple)
+        cursor.execute(sql_query, insert_tuple)
+        db.commit()
+    except:
+        print("Failed inserting date object into MySQL table {}")
+    finally:
+        db.close()
+        cursor.close()
+
+    return redirect(url_for('/webhook.index'))

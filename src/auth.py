@@ -2,7 +2,7 @@
 from flask import Blueprint, request, render_template, sessions, flash, redirect, url_for
 from db import db_connect
 
-app_name = "Attendance Broker"
+app_name = "Broker & Webhook"
 bp = "/auth"
 app = Blueprint(bp, __name__, url_prefix='/')
 

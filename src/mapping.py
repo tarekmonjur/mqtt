@@ -1,7 +1,7 @@
 
 from flask import Blueprint, request, render_template
 
-app_name = "Attendance Broker"
+app_name = "Broker & Webhook"
 bp = "/mapping"
 app = Blueprint(bp, __name__, url_prefix='/')
 
@@ -13,4 +13,3 @@ def index():
         "title": "Device Mapping"
     }
     return render_template('mapping/index.html', data=data)
-
