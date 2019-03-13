@@ -1,5 +1,5 @@
 
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import Blueprint, request, render_template, redirect, url_for, flash
 from datetime import datetime
 from db import db_connect
 
@@ -36,13 +36,15 @@ def store():
         cursor = db.cursor()
         sql_query = "INSERT INTO webhooks (school_name,school_domain,api_token,api_url,created_at) values (%s,%s,%s,%s,%s)"
         insert_tuple = (input_data['school_name'], input_data['school_domain'], input_data['api_token'], input_data['api_url'], created_at)
-        print(insert_tuple)
+        # print(insert_tuple)
         cursor.execute(sql_query, insert_tuple)
         db.commit()
+        flash('School Webhook successfully added.', 'success')
+        return redirect(url_for('/webhook.index'))
     except:
-        print("Failed inserting date object into MySQL table {}")
+        # print("Failed inserting date object into MySQL table {}")
+        flash('Sorry! School Webhook not added. Please try again.', 'error')
+        return redirect(url_for('/webhook.add'))
     finally:
         db.close()
         cursor.close()
-
-    return redirect(url_for('/webhook.index'))
