@@ -32,7 +32,19 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                    {% for result in data.results %}
+                                    <tr>
+                                        <td>{{ result["id"] }}</td>
+                                        <td>{{ result["school_name"] }}</td>
+                                        <td>{{ result["school_domain"] }}</td>
+                                        <td>{{ result["api_token"] }}</td>
+                                        <td>{{ result["api_url"] }}</td>
+                                        <td>
+                                            <a href="" class="btn btn-primary btn-sm">Edit</a>
+                                            <a href="" class="btn btn-danger btn-sm">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
                                 </tbody>
                                 <tfoot>
                                 <tr>
