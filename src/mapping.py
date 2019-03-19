@@ -13,3 +13,13 @@ def index():
         "title": "Device Mapping"
     }
     return render_template('mapping/index.html', data=data)
+
+
+@app.route(bp+'/add', methods=['GET'])
+def add():
+    data = {
+        "appName": app_name,
+        "title": "Device Mapping"
+    }
+    return render_template('mapping/add.html', data=data)
+
