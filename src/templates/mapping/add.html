@@ -25,9 +25,13 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="school_name">School Name</label>
-                                        <input type="text" class="form-control" name="school_name" id="school_name"
-                                               placeholder="Enter School Name" value="">
+                                        <label for="webhook_id">School Name</label>
+                                        <select class="form-control" name="webhook_id" id="webhook_id" required>
+                                            <option value="">--Select School Name--</option>
+                                            {% for webhook in data.webhooks %}
+                                            <option value="{{ webhook.id }}">{{ webhook.school_name }}</option>
+                                            {% endfor %}
+                                        </select>
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
@@ -35,7 +39,7 @@
                                     <div class="form-group">
                                         <label for="device_number">Device Number</label>
                                         <input type="text" class="form-control" name="device_number" id="device_number"
-                                               placeholder="Enter Device Number" value="">
+                                               placeholder="Enter Device Number" value="" required>
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
@@ -46,7 +50,7 @@
                                     <div class="form-group">
                                         <label for="rf_id">RFID</label>
                                         <input type="text" class="form-control" name="rf_id" id="rf_id"
-                                               placeholder="Enter RFID" value="">
+                                               placeholder="Enter RFID" value="" required>
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
@@ -54,7 +58,7 @@
                                     <div class="form-group">
                                         <label for="channel">Broker Channel</label>
                                         <input type="text" class="form-control" name="channel" id="channel"
-                                               placeholder="Enter Broker Channel" value="">
+                                               placeholder="Enter Broker Channel" value="" required>
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>

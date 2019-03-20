@@ -54,12 +54,12 @@ def on_message(client, userdata, message):
 
 
 
-mqttc = mqtt.Client()
-mqttc.username_pw_set("tarek", password="tarek99")
-mqttc.on_connect = on_connect
-mqttc.on_message = on_message
-mqttc.connect("localhost", 1883, 60, "localhost")
-mqttc.loop_start()
+# mqttc = mqtt.Client()
+# mqttc.username_pw_set("tarek", password="tarek99")
+# mqttc.on_connect = on_connect
+# mqttc.on_message = on_message
+# mqttc.connect("localhost", 1883, 60, "localhost")
+# mqttc.loop_start()
 # mqttc.loop_forever()
 
 

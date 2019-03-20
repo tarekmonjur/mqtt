@@ -36,7 +36,6 @@ def add():
 @app.route(bp+'/add', methods=['POST'])
 def store():
     input_data = request.form
-    print(input_data['school_name'])
     try:
         created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         db = db_connect()
