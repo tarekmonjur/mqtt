@@ -34,7 +34,7 @@
                                 <tbody>
                                     {% for result in data.results %}
                                     <tr>
-                                        <td>{{ result["id"] }}</td>
+                                        <td>{{ loop.index }}</td>
                                         <td>{{ result["school_name"] }}</td>
                                         <td>{{ result["school_domain"] }}</td>
                                         <td>{{ result["api_token"] }}</td>

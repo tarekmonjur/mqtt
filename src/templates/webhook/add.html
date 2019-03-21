@@ -1,74 +1,76 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<section class="content">
-<div class="container-fluid">
+    <section class="content">
+        <div class="container-fluid">
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-       {% if messages %}
-          {% for category, message in messages %}
-              <div class="alert alert-{{ category }}"> {{ message }}</div>
-          {% endfor %}
-       {% endif %}
-    {% endwith %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}"> {{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
 
-  <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="title">{{ data.title }}</h4>
-            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="title">{{ data.title }}</h4>
+                        </div>
 
-            <div class="card-body">
-                <form role="form" method="post" action="">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="school_name">School Name</label>
-                                        <input type="text" class="form-control" name="school_name" id="school_name"
-                                               placeholder="Enter School Name" value="">
-                                        <span class="text-danger"></span>
+                            <form role="form" method="post" action="">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="school_name">School Name</label>
+                                                <input type="text" class="form-control" name="school_name"
+                                                       id="school_name"
+                                                       placeholder="Enter School Name" value="">
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="school_domain">School Domain</label>
+                                                <input type="text" class="form-control" name="school_domain"
+                                                       id="school_domain"
+                                                       placeholder="Enter School Domain" value="">
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="school_domain">School Domain</label>
-                                        <input type="text" class="form-control" name="school_domain" id="school_domain"
-                                               placeholder="Enter School Domain" value="">
-                                        <span class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="api_token">API Token</label>
-                                        <input type="text" class="form-control" name="api_token" id="api_token"
-                                               placeholder="Enter API Token" value="">
-                                        <span class="text-danger"></span>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="api_token">API Token</label>
+                                                <input type="text" class="form-control" name="api_token" id="api_token"
+                                                       placeholder="Enter API Token" value="">
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="api_url">API URL</label>
+                                                <input type="text" class="form-control" name="api_url" id="api_url"
+                                                       placeholder="Enter API URL" value="">
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="api_url">API URL</label>
-                                        <input type="text" class="form-control" name="api_url" id="api_url"
-                                               placeholder="Enter API URL" value="">
-                                        <span class="text-danger"></span>
-                                    </div>
+                                <div class="card-footer">
+                                    <button type="submit" name="submit" class="btn btn-success">Submit</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" name="submit" class="btn btn-success">Submit</button>
-                        </div>
-                    </form>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-  </div>
-</div>
-</section>
+    </section>
 
-{%endblock%}
+{% endblock %}

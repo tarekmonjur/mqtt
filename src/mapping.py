@@ -14,7 +14,20 @@ def index():
         "appName": app_name,
         "title": "Device Mapping"
     }
-    return render_template('mapping/index.html', data=data)
+    try:
+        db = db_connect()
+        cursor = db.cursor(dictionary=True)
+        sql_query = "select devices.*, webhooks.school_name from devices join webhooks on devices.webhook_id = webhooks.id order by id desc"
+        cursor.execute(sql_query)
+        result = cursor.fetchall()
+        data['devices'] = result
+        print(result)
+    except:
+        flash('Sorry! Something was wrong.', 'error')
+    finally:
+        cursor.close()
+        db.close()
+        return render_template('mapping/index.html', data=data)
 
 
 @app.route(bp+'/add', methods=['GET'])
@@ -23,13 +36,19 @@ def add():
         "appName": app_name,
         "title": "Device Mapping"
     }
-    db = db_connect()
-    cursor = db.cursor(dictionary=True)
-    sql_query = "select * from webhooks"
-    cursor.execute(sql_query)
-    result = cursor.fetchall()
-    data['webhooks'] = result
-    return render_template('mapping/add.html', data=data)
+    try:
+        db = db_connect()
+        cursor = db.cursor(dictionary=True)
+        sql_query = "select * from webhooks order by id desc"
+        cursor.execute(sql_query)
+        result = cursor.fetchall()
+        data['webhooks'] = result
+    except:
+        flash('Sorry! Something was wrong.', 'error')
+    finally:
+        cursor.close()
+        db.close()
+        return render_template('mapping/add.html', data=data)
 
 
 @app.route(bp+'/add', methods=['POST'])

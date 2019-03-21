@@ -1,46 +1,69 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<section class="content">
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="title">{{ data.title }} <a href="{{ url_for('/mapping.add') }}" class="btn btn-sm btn-success pull-right">Add Device</a></h4>
-            </div>
+    <section class="content">
+        <div class="container-fluid">
 
-            <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>SL</th>
-                        <th>School Name</th>
-                        <th>School Domain</th>
-                        <th>API Token</th>
-                        <th>API URL</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}"> {{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
 
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <th>SL</th>
-                        <th>School Name</th>
-                        <th>School Domain</th>
-                        <th>API Token</th>
-                        <th>API URL</th>
-                        <th>Action</th>
-                    </tr>
-                    </tfoot>
-                </table>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="title">{{ data.title }} <a href="{{ url_for('/mapping.add') }}"
+                                                                  class="btn btn-sm btn-success pull-right">Add
+                                Device</a></h4>
+                        </div>
+
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>SL</th>
+                                    <th>School Name</th>
+                                    <th>Device Number</th>
+                                    <th>RFID Number</th>
+                                    <th>Channel</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for device in data.devices %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>{{ device['school_name'] }}</td>
+                                        <td>{{ device['device_number'] }}</td>
+                                        <td>{{ device['rf_id'] }}</td>
+                                        <td>{{ device['channel'] }}</td>
+                                        <td>
+                                            <a href="" class="btn btn-primary btn-sm">Edit</a>
+                                            <a href="" class="btn btn-danger btn-sm">Delete</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>SL</th>
+                                    <th>School Name</th>
+                                    <th>Device Number</th>
+                                    <th>RFID Number</th>
+                                    <th>Channel</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-  </div>
-</div>
-</section>
+    </section>
 
-{%endblock%}
+{% endblock %}

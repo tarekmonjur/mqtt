@@ -14,14 +14,20 @@ def index():
         "appName": app_name,
         "title": "Webhooks"
     }
-    db = db_connect()
-    cursor = db.cursor(dictionary=True)
-    sql_query = "select * from webhooks"
-    cursor.execute(sql_query)
-    result = cursor.fetchall()
-    data['results'] = result
-    # print(data)
-    return render_template('webhook/index.html', data=data)
+    try:
+        db = db_connect()
+        cursor = db.cursor(dictionary=True)
+        sql_query = "select * from webhooks order by id desc"
+        cursor.execute(sql_query)
+        result = cursor.fetchall()
+        data['results'] = result
+        # print(data)
+    except:
+        flash('Sorry! Something was wrong.', 'error')
+    finally:
+        cursor.close()
+        db.close()
+        return render_template('webhook/index.html', data=data)
 
 
 @app.route(bp+'/add', methods=['GET'])

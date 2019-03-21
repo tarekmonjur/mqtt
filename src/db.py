@@ -12,11 +12,11 @@ def db_connect():
             print('DB not Connected.')
 
     except Error as e:
-        print('sdafasfasfaf')
+        print(e.message)
     #
     # finally:
     #     conn.close()
 
 
 if __name__ == '__main__':
-    connect()
+    db_connect()
