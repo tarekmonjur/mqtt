@@ -63,7 +63,10 @@ def store():
         cursor.execute(sql_query, insert_data)
         db.commit()
         flash('School Device successfully mapped', 'success')
-        return redirect(url_for('/mapping.index'))
+        if input_data['submit'] == 'save':
+            return redirect(url_for('/mapping.index'))
+        else:
+            return redirect(url_for('/mapping.add'))
     except:
         flash('Sorry! Device not mapped. Please try again.', 'error')
         return redirect(url_for('/mapping.add'))
