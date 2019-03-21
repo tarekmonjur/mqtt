@@ -26,7 +26,7 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="webhook_id">School Name</label>
-                                                <select class="form-control" name="webhook_id" id="webhook_id" required>
+                                                <select class="form-control select2" name="webhook_id" id="webhook_id" required>
                                                     <option value="">--Select School Name--</option>
                                                     {% for webhook in data.webhooks %}
                                                         <option value="{{ webhook.id }}">{{ webhook.school_name }}</option>

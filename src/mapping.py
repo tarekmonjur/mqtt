@@ -21,7 +21,7 @@ def index():
         cursor.execute(sql_query)
         result = cursor.fetchall()
         data['devices'] = result
-        print(result)
+        # print(result)
     except:
         flash('Sorry! Something was wrong.', 'error')
     finally:

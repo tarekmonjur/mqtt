@@ -54,7 +54,6 @@ def store():
         flash('School Webhook successfully added.', 'success')
         return redirect(url_for('/webhook.index'))
     except:
-        # print("Failed inserting date object into MySQL table {}")
         flash('Sorry! School Webhook not added. Please try again.', 'error')
         return redirect(url_for('/webhook.add'))
     finally:
