@@ -51,11 +51,61 @@ def store():
         # print(insert_tuple)
         cursor.execute(sql_query, insert_tuple)
         db.commit()
-        flash('School Webhook successfully added.', 'success')
+        flash('School webhook successfully added.', 'success')
         return redirect(url_for('/webhook.index'))
     except:
-        flash('Sorry! School Webhook not added. Please try again.', 'error')
+        flash('Sorry! School webhook not added. Please try again.', 'error')
         return redirect(url_for('/webhook.add'))
     finally:
-        db.close()
         cursor.close()
+        db.close()
+
+
+@app.route(bp+'/edit', methods=['GET'])
+def edit():
+    data = {
+        "appName": app_name,
+        "title": "Edit Webhook"
+    }
+    return render_template('webhook/edit.html', data=data)
+
+
+@app.route(bp+'/update', methods=['POST'])
+def update():
+    input_data = request.form
+    try:
+        updated_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        db = db_connect()
+        cursor = db.cursor()
+        sql_query = "UPDATE webhooks SET school_name=%s, school_domain=%s, api_token=%s, api_url=%s, updated_at=%s"
+        update_tuple = (input_data['school_name'], input_data['school_domain'], input_data['api_token'], input_data['api_url'],updated_at)
+        # print(insert_tuple)
+        cursor.execute(sql_query, update_tuple)
+        db.commit()
+        flash('School webhook successfully updated.', 'success')
+        return redirect(url_for('/webhook.index'))
+    except:
+        flash('Sorry! School webhook not updated. Please try again.', 'error')
+        return redirect(url_for('/webhook.edit'))
+    finally:
+        cursor.close()
+        db.close()
+
+
+@app.route(bp+'/delete', methods=['GET'])
+def delete():
+    try:
+        db = db_connect()
+        cursor = db.cursor()
+        sql_query = "DELETE FROM webhooks WHERE id=%s"
+        delete_tuple=(1)
+        cursor.execute(sql_query, delete_tuple)
+        db.commit()
+        flash('School webhook successfully deleted.', 'success')
+    except:
+        flash('Sorry! School webhook not deleted.', 'error')
+    finally:
+        cursor.close()
+        db.close()
+        return redirect(url_for('/webhook.index'))
+

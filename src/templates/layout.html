@@ -142,6 +142,15 @@
 <script src="{{ url_for('static', filename='dist/js/adminlte.js') }}"></script>
 
 <script>
+    function checkDelete(msg){
+            var check = confirm(msg);
+            if(check === true){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
     $(function () {
         $("#example1").DataTable();
         $('#example2').DataTable({
@@ -176,7 +185,7 @@
             mywindow.document.write(document.getElementById('attendances-table').innerHTML);
             mywindow.document.write('</body></html>');
             mywindow.print();
-        })
+        });
     });
 </script>
 </body>
