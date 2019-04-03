@@ -27,7 +27,7 @@
                                             <div class="form-group">
                                                 <label for="school_name">School Name</label>
                                                 <input type="text" class="form-control" name="school_name"
-                                                       id="school_name"
+                                                       id="school_name" value="{{ data.webhook["school_name"] }}"
                                                        placeholder="Enter School Name" value="">
                                                 <span class="text-danger"></span>
                                             </div>
@@ -36,7 +36,7 @@
                                             <div class="form-group">
                                                 <label for="school_domain">School Domain</label>
                                                 <input type="text" class="form-control" name="school_domain"
-                                                       id="school_domain"
+                                                       id="school_domain" value="{{ data.webhook["school_domain"] }}"
                                                        placeholder="Enter School Domain" value="">
                                                 <span class="text-danger"></span>
                                             </div>
@@ -47,16 +47,18 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="api_token">API Token</label>
-                                                <input type="text" class="form-control" name="api_token" id="api_token"
-                                                       placeholder="Enter API Token" value="">
+                                                <input type="text" class="form-control" name="api_token"
+                                                       id="api_token" value="{{ data.webhook["api_token"] }}"
+                                                       placeholder="Enter API Token">
                                                 <span class="text-danger"></span>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="api_url">API URL</label>
-                                                <input type="text" class="form-control" name="api_url" id="api_url"
-                                                       placeholder="Enter API URL" value="">
+                                                <input type="text" class="form-control" name="api_url"
+                                                       id="api_url" value="{{ data.webhook["api_url"] }}"
+                                                       placeholder="Enter API URL">
                                                 <span class="text-danger"></span>
                                             </div>
                                         </div>

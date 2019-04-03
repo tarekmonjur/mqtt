@@ -61,13 +61,26 @@ def store():
         db.close()
 
 
-@app.route(bp+'/edit', methods=['GET'])
-def edit():
+@app.route(bp+'/edit/<int:webhook_id>', methods=['GET'])
+def edit(webhook_id):
     data = {
         "appName": app_name,
         "title": "Edit Webhook"
     }
-    return render_template('webhook/edit.html', data=data)
+    try:
+        db = db_connect()
+        cursor = db.cursor(dictionary=True)
+        sql_query = "SELECT * FROM webhooks WHERE id = %s"
+        input_tuple = (webhook_id,)
+        cursor.execute(sql_query, input_tuple)
+        result = cursor.fetchone()
+        data['webhook'] = result
+    except:
+        flash('Sorry! Something was wrong.', 'error')
+    finally:
+        cursor.close()
+        db.close()
+        return render_template('webhook/edit.html', data=data)
 
 
 @app.route(bp+'/update', methods=['POST'])

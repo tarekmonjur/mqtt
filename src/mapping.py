@@ -75,5 +75,49 @@ def store():
         db.close()
 
 
+@app.route(bp+'/edit', methods=['GET'])
+def edit():
+    data = {
+        "appName": app_name,
+        "title": "Edit Mapping"
+    }
+    return render_template('mapping/edit.html', data=data)
 
 
+@app.route(bp+'/update', methods=['POST'])
+def update():
+    try:
+        input_data = request.form
+        db = db_connect()
+        cursor = db.cursor()
+        updated_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sql_query = "UPDATE devices SET webhook_id=%s, device_number=%s, rf_id=%s, channel=%s, updated_at=%s WHERE id=%s"
+        update_data = (input_data['webhook_id'], input_data['device_number'], input_data['rf_id'], input_data['channel'], updated_at)
+        cursor.execute(sql_query, update_data)
+        db.commit()
+        flash('Device mapping successfully updated', 'success')
+        return redirect(url_for('/mapping.index'))
+    except:
+        flash('Sorry! Device not mapped. Please try again.', 'error')
+        return redirect(url_for('/mapping.edit'))
+    finally:
+        cursor.close()
+        db.close()
+
+
+@app.route(bp + '/delete', methods=['GET'])
+def delete():
+    try:
+        db = db_connect()
+        cursor = db.cursor()
+        sql_query = "DELETE FROM devices WHERE id=%s"
+        delete_tuple = (1)
+        cursor.execute(sql_query, delete_tuple)
+        db.commit()
+        flash('Device mapping successfully deleted.', 'success')
+    except:
+        flash('Sorry! Device mapping not deleted.', 'error')
+    finally:
+        cursor.close()
+        db.close()
+        return redirect(url_for('/webhook.index'))
