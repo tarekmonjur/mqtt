@@ -67,6 +67,7 @@ def edit(webhook_id):
         "appName": app_name,
         "title": "Edit Webhook"
     }
+    print(type(webhook_id))
     try:
         db = db_connect()
         cursor = db.cursor(dictionary=True)
@@ -83,15 +84,15 @@ def edit(webhook_id):
         return render_template('webhook/edit.html', data=data)
 
 
-@app.route(bp+'/update', methods=['POST'])
-def update():
+@app.route(bp+'/update/<int:webhook_id>', methods=['POST'])
+def update(webhook_id):
     input_data = request.form
     try:
         updated_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         db = db_connect()
         cursor = db.cursor()
-        sql_query = "UPDATE webhooks SET school_name=%s, school_domain=%s, api_token=%s, api_url=%s, updated_at=%s"
-        update_tuple = (input_data['school_name'], input_data['school_domain'], input_data['api_token'], input_data['api_url'],updated_at)
+        sql_query = "UPDATE webhooks SET school_name=%s, school_domain=%s, api_token=%s, api_url=%s, updated_at=%s WHERE id=%s"
+        update_tuple = (input_data['school_name'], input_data['school_domain'], input_data['api_token'], input_data['api_url'], updated_at, webhook_id)
         # print(insert_tuple)
         cursor.execute(sql_query, update_tuple)
         db.commit()

@@ -20,7 +20,7 @@
                         </div>
 
                         <div class="card-body">
-                            <form role="form" method="post" action="">
+                            <form role="form" method="post" action="{{ url_for('/webhook.update', webhook_id = data.webhook["id"]) }}">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-6">
