@@ -75,13 +75,29 @@ def store():
         db.close()
 
 
-@app.route(bp+'/edit', methods=['GET'])
-def edit():
+@app.route(bp+'/edit/<int:device_id>', methods=['GET'])
+def edit(device_id):
     data = {
         "appName": app_name,
         "title": "Edit Mapping"
     }
-    return render_template('mapping/edit.html', data=data)
+    try:
+        db = db_connect()
+        cursor = db.cursor(dictionary=True)
+        sql_query = "SELECT * FROM devices WHERE id = %s"
+        input_tuple = (device_id,)
+        cursor.execute(sql_query, input_tuple)
+        data['device'] = cursor.fetchone()
+
+        sql_query = "select * from webhooks order by id desc"
+        cursor.execute(sql_query)
+        data['webhooks'] = cursor.fetchall()
+    except:
+        flash('Sorry! Something was wrong.', 'error')
+    finally:
+        cursor.close()
+        db.close()
+        return render_template('mapping/edit.html', data=data)
 
 
 @app.route(bp+'/update', methods=['POST'])

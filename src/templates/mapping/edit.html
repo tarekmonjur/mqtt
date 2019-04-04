@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <section class="content">
+        <div class="container-fluid">
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}"> {{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="title">{{ data.title }}</h4>
+                        </div>
+
+                        <div class="card-body">
+                            <form role="form" method="post" action="">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="webhook_id">School Name</label>
+                                                <select class="form-control select2" name="webhook_id" id="webhook_id" required>
+                                                    <option value="">--Select School Name--</option>
+                                                    {% for webhook in data.webhooks %}
+                                                        <option value="{{ webhook.id }}" {% if webhook.id == data.device["webhook_id"] %} selected {% endif %}>{{ webhook.school_name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="device_number">Device Number</label>
+                                                <input type="text" class="form-control" name="device_number"
+                                                       id="device_number" value="{{ data.device["device_number"] }}"
+                                                       placeholder="Enter Device Number" required>
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="rf_id">RFID</label>
+                                                <input type="text" class="form-control" name="rf_id"
+                                                       id="rf_id" value="{{ data.device["rf_id"] }}"
+                                                       placeholder="Enter RFID" required>
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="channel">Broker Channel</label>
+                                                <input type="text" class="form-control" name="channel"
+                                                       id="channel" value="{{ data.device["channel"] }}"
+                                                       placeholder="Enter Broker Channel" required>
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" name="submit" value="save" class="btn btn-success">Update Device</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

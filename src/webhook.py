@@ -67,7 +67,6 @@ def edit(webhook_id):
         "appName": app_name,
         "title": "Edit Webhook"
     }
-    print(type(webhook_id))
     try:
         db = db_connect()
         cursor = db.cursor(dictionary=True)
