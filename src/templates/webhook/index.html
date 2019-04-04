@@ -41,7 +41,7 @@
                                         <td>{{ result["api_url"] }}</td>
                                         <td>
                                             <a href="{{ url_for('/webhook.edit', webhook_id = result["id"]) }}" class="btn btn-primary btn-sm">Edit</a>
-                                            <a href="{{ url_for('/webhook.delete') }}" onclick="return checkDelete('Are you sure delete webhook?')" class="btn btn-danger btn-sm">Delete</a>
+                                            <a href="{{ url_for('/webhook.delete', webhook_id = result["id"]) }}" onclick="return checkDelete('Are you sure delete webhook?')" class="btn btn-danger btn-sm">Delete</a>
                                         </td>
                                     </tr>
                                     {% endfor %}

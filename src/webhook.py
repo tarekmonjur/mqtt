@@ -106,13 +106,13 @@ def update(webhook_id):
         db.close()
 
 
-@app.route(bp+'/delete', methods=['GET'])
-def delete():
+@app.route(bp+'/delete/<int:webhook_id>', methods=['GET'])
+def delete(webhook_id):
     try:
         db = db_connect()
         cursor = db.cursor()
-        sql_query = "DELETE FROM webhooks WHERE id=%s"
-        delete_tuple=(1)
+        sql_query = "DELETE FROM webhooks WHERE id = %s"
+        delete_tuple = (webhook_id,)
         cursor.execute(sql_query, delete_tuple)
         db.commit()
         flash('School webhook successfully deleted.', 'success')
