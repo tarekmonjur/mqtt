@@ -1,5 +1,6 @@
 
 from flask import Blueprint, request, render_template
+from db import db_connect
 
 app_name = "Attendance Broker"
 bp = "/dashboard"
@@ -12,6 +13,16 @@ def index():
         "appName": app_name,
         "title": "Dashbaord"
     }
+    db = db_connect()
+    cursor = db.cursor()
+    sql_query = "SELECT COUNT(id) AS total_device FROM devices"
+    cursor.execute(sql_query)
+    device = cursor.fetchone()
+    data["total_device"] = device[0]
 
+    sql_query = "SELECT COUNT(id) AS total_webhook FROM webhooks"
+    cursor.execute(sql_query)
+    webhook = cursor.fetchone()
+    data["total_webhook"] = webhook[0]
     print(data)
     return render_template('index.html', data=data)

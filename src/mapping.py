@@ -17,7 +17,7 @@ def index():
     try:
         db = db_connect()
         cursor = db.cursor(dictionary=True)
-        sql_query = "select devices.*, webhooks.school_name from devices join webhooks on devices.webhook_id = webhooks.id order by id desc"
+        sql_query = "select devices.*, webhooks.school_name from devices left join webhooks on devices.webhook_id = webhooks.id order by id desc"
         cursor.execute(sql_query)
         result = cursor.fetchall()
         data['devices'] = result
