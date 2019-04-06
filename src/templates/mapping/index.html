@@ -43,7 +43,7 @@
                                         <td>{{ device['channel'] }}</td>
                                         <td>
                                             <a href="{{ url_for('/mapping.edit', device_id = device["id"]) }}" class="btn btn-primary btn-sm">Edit</a>
-                                            <a href="" class="btn btn-danger btn-sm">Delete</a>
+                                            <a href="{{ url_for('/mapping.delete', device_id = device["id"]) }}" onclick="return checkDelete('Are you sure delete mapping?')" class="btn btn-danger btn-sm">Delete</a>
                                         </td>
                                     </tr>
                                 {% endfor %}

@@ -116,25 +116,26 @@ def update(device_id):
     except:
         db.rollback()
         flash('Sorry! Device not mapped. Please try again.', 'error')
-        return redirect(url_for('/mapping.edit'))
+        return redirect(url_for('/mapping.edit', device_id = device_id))
     finally:
         cursor.close()
         db.close()
 
 
-@app.route(bp + '/delete', methods=['GET'])
-def delete():
+@app.route(bp + '/delete/<int:device_id>', methods=['GET'])
+def delete(device_id):
     try:
         db = db_connect()
         cursor = db.cursor()
         sql_query = "DELETE FROM devices WHERE id=%s"
-        delete_tuple = (1)
+        delete_tuple = (device_id,)
         cursor.execute(sql_query, delete_tuple)
         db.commit()
         flash('Device mapping successfully deleted.', 'success')
     except:
+        db.rollback()
         flash('Sorry! Device mapping not deleted.', 'error')
     finally:
         cursor.close()
         db.close()
-        return redirect(url_for('/webhook.index'))
+        return redirect(url_for('/mapping.index'))
