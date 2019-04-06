@@ -27,12 +27,12 @@
       <div class="small-box bg-info">
         <div class="inner">
           <h3>{{data["total_device"]}}</h3>
-          <p>Total Device</p>
+          <p>Total Device Mapping</p>
         </div>
         <div class="icon">
           <i class="ion ion-bag"></i>
         </div>
-        <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="{{ url_for('/mapping.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
 
@@ -41,12 +41,12 @@
       <div class="small-box bg-success">
         <div class="inner">
           <h3>{{data.total_webhook}}</h3>
-          <p>Total School</p>
+          <p>Total School Webhook</p>
         </div>
         <div class="icon">
           <i class="ion ion-stats-bars"></i>
         </div>
-        <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="{{ url_for('/webhook.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
   </div>

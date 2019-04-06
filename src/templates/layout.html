@@ -78,8 +78,7 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-item">
-                        <a href="{{url_for('/dashboard.index')}}"
-                           class="nav-link">
+                        <a href="{{url_for('/dashboard.index')}}" class="nav-link {% if request.path == '/' %} active {% endif %}">
                             <i class="nav-icon fa fa-dashboard"></i>
                             <p>
                                 Dashboard
@@ -88,14 +87,14 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{url_for('/mapping.index')}}" class="nav-link">
+                        <a href="{{url_for('/mapping.index')}}" class="nav-link {% if request.path == '/mapping/index' %} active {% endif %}">
                             <i class="nav-icon fa fa-id-card-o"></i>
                             <p>Device Mapping</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{url_for('/webhook.index')}}" class="nav-link">
+                        <a href="{{url_for('/webhook.index')}}" class="nav-link {% if request.path == '/webhook/index' %} active {% endif %}">
                             <i class="nav-icon fa fa-cogs"></i>
                             <p>Webhook Settings</p>
                         </a>
