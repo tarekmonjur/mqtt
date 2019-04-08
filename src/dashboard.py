@@ -1,6 +1,6 @@
 
-from flask import Blueprint, request, render_template
-from db import db_connect
+from flask import Blueprint, render_template
+from db import db_connect, login_required
 
 app_name = "Attendance Broker"
 bp = "/dashboard"
@@ -8,6 +8,7 @@ app = Blueprint(bp, __name__, url_prefix='/')
 
 
 @app.route('/', methods=['GET'])
+@login_required
 def index():
     data = {
         "appName": app_name,

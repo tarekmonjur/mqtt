@@ -1,11 +1,21 @@
-from flask import Flask
+from flask import Flask, session, redirect, url_for, g
 from . import dashboard, auth, webhook, mapping
+
+
+def auth_check():
+    if session.get("login") is not True:
+        return redirect(url_for('/auth.index'))
+    else:
+        g.auth = session.get("auth")
 
 
 # create and configure the app
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'secret!'
+
+    mapping.app.before_request(auth_check)
+    webhook.app.before_request(auth_check)
 
     app.register_blueprint(auth.app)
     app.register_blueprint(dashboard.app)
