@@ -25,6 +25,7 @@
     <style>
         .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active{color:#fff;background-color: #dd4445!important;}
         .select2-container--default .select2-selection--single, .select2-selection .select2-selection--single{height: 36px!important;}
+        .error{color: red!important;}
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -137,9 +138,11 @@
 <script src="{{ url_for('static', filename='plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ url_for('static', filename='plugins/select2/select2.full.min.js') }}"></script>
+<!-- Jquery Validate -->
+<script src="{{ url_for('static', filename='plugins/jquery.validate.1.19.0.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ url_for('static', filename='dist/js/adminlte.js') }}"></script>
-
+{% block script %} {% endblock %}
 <script>
     function checkDelete(msg){
             var check = confirm(msg);
