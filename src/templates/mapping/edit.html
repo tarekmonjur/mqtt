@@ -1,6 +1,15 @@
 {% extends "layout.html" %}
+{% block head %}
+    {{ super() }}
+    <style>
+        #webhook_id-error{
+            position: absolute!important;
+            top: 65px!important;
+            left: 8px!important;
+        }
+    </style>
+{% endblock %}
 {% block content %}
-
     <section class="content">
         <div class="container-fluid">
 
@@ -20,13 +29,13 @@
                         </div>
 
                         <div class="card-body">
-                            <form role="form" method="post" action="{{ url_for('/mapping.edit', device_id = data.device["id"]) }}">
+                            <form id="edit_form" role="form" method="post" action="{{ url_for('/mapping.edit', device_id = data.device["id"]) }}">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="webhook_id">School Name</label>
-                                                <select class="form-control select2" name="webhook_id" id="webhook_id" required>
+                                                <select class="form-control select2" name="webhook_id" id="webhook_id">
                                                     <option value="">--Select School Name--</option>
                                                     {% for webhook in data.webhooks %}
                                                         <option value="{{ webhook.id }}" {% if webhook.id == data.device["webhook_id"] %} selected {% endif %}>{{ webhook.school_name }}</option>
@@ -40,7 +49,7 @@
                                                 <label for="device_number">Device Number</label>
                                                 <input type="text" class="form-control" name="device_number"
                                                        id="device_number" value="{{ data.device["device_number"] }}"
-                                                       placeholder="Enter Device Number" required>
+                                                       placeholder="Enter Device Number">
                                                 <span class="text-danger"></span>
                                             </div>
                                         </div>
@@ -61,7 +70,7 @@
                                                 <label for="channel">Broker Channel</label>
                                                 <input type="text" class="form-control" name="channel"
                                                        id="channel" value="{{ data.device["channel"] }}"
-                                                       placeholder="Enter Broker Channel" required>
+                                                       placeholder="Enter Broker Channel">
                                                 <span class="text-danger"></span>
                                             </div>
                                         </div>
@@ -77,5 +86,35 @@
             </div>
         </div>
     </section>
+
+{% endblock %}
+
+
+{% block script %}
+
+    <script type="text/javascript">
+        $(function () {
+            $("#edit_form").validate({
+                rules: {
+                    webhook_id: "required",
+                    device_number: {
+                        required: true,
+                        maxlength: 20,
+                        minlength: 5
+                    },
+                    rf_id: {
+                        required: true,
+                        maxlength: 20,
+                        minlength: 5
+                    },
+                    channel: {
+                        maxlength: 20,
+                        minlength: 5
+                    }
+                }
+            });
+        });
+
+    </script>
 
 {% endblock %}

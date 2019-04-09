@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% block head %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{{ data['title'] }}</title>
@@ -27,6 +28,7 @@
         .select2-container--default .select2-selection--single, .select2-selection .select2-selection--single{height: 36px!important;}
         .error{color: red!important;}
     </style>
+    {% endblock %}
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
