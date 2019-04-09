@@ -1,4 +1,14 @@
 {% extends "layout.html" %}
+{% block head %}
+    {{ super() }}
+    <style>
+        #webhook_id-error{
+            position: absolute!important;
+            top: 65px!important;
+            left: 8px!important;
+        }
+    </style>
+{% endblock %}
 {% block content %}
 
     <section class="content">
@@ -20,15 +30,15 @@
                         </div>
 
                         <div class="card-body">
-                            <form role="form" method="post" action="">
+                            <form id="add_form" role="form" method="post" action="">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="school_name">School Name</label>
                                                 <input type="text" class="form-control" name="school_name"
-                                                       id="school_name"
-                                                       placeholder="Enter School Name" value="">
+                                                       id="school_name" value="{{ request.form.school_name }}"
+                                                       placeholder="Enter School Name">
                                                 <span class="text-danger"></span>
                                             </div>
                                         </div>
@@ -36,8 +46,8 @@
                                             <div class="form-group">
                                                 <label for="school_domain">School Domain</label>
                                                 <input type="text" class="form-control" name="school_domain"
-                                                       id="school_domain"
-                                                       placeholder="Enter School Domain" value="">
+                                                       id="school_domain" value="{{ request.form.school_domain }}"
+                                                       placeholder="Enter School Domain">
                                                 <span class="text-danger"></span>
                                             </div>
                                         </div>
@@ -48,7 +58,7 @@
                                             <div class="form-group">
                                                 <label for="api_token">API Token</label>
                                                 <input type="text" class="form-control" name="api_token" id="api_token"
-                                                       placeholder="Enter API Token" value="">
+                                                       placeholder="Enter API Token" value="{{ request.form.api_token }}">
                                                 <span class="text-danger"></span>
                                             </div>
                                         </div>
@@ -56,7 +66,7 @@
                                             <div class="form-group">
                                                 <label for="api_url">API URL</label>
                                                 <input type="text" class="form-control" name="api_url" id="api_url"
-                                                       placeholder="Enter API URL" value="">
+                                                       placeholder="Enter API URL" value="{{ request.form.api_url }}">
                                                 <span class="text-danger"></span>
                                             </div>
                                         </div>
@@ -72,5 +82,38 @@
             </div>
         </div>
     </section>
+
+{% endblock %}
+
+
+{% block script %}
+
+    <script type="text/javascript">
+        $(function () {
+            $("#add_form").validate({
+                rules: {
+                    school_name: {
+                        required: true,
+                        maxlength: 200,
+                        minlength: 5
+                    },
+                    school_domain: {
+                        required: true,
+                        maxlength: 100,
+                        minlength: 5
+                    },
+                    api_token: {
+                        maxlength: 100,
+                        minlength: 5
+                    },
+                    api_url: {
+                        maxlength: 200,
+                        minlength: 5
+                    }
+                }
+            });
+        });
+
+    </script>
 
 {% endblock %}
