@@ -1,14 +1,4 @@
 {% extends "layout.html" %}
-{% block head %}
-    {{ super() }}
-    <style>
-        #webhook_id-error{
-            position: absolute!important;
-            top: 65px!important;
-            left: 8px!important;
-        }
-    </style>
-{% endblock %}
 {% block content %}
 
     <section class="content">
@@ -103,10 +93,12 @@
                         minlength: 5
                     },
                     api_token: {
+                        required: true,
                         maxlength: 100,
                         minlength: 5
                     },
                     api_url: {
+                        required: true,
                         maxlength: 200,
                         minlength: 5
                     }

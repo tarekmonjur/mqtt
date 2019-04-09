@@ -20,7 +20,7 @@
                         </div>
 
                         <div class="card-body">
-                            <form role="form" method="post" action="{{ url_for('/webhook.update', webhook_id = data.webhook["id"]) }}">
+                            <form id="edit_form" role="form" method="post" action="{{ url_for('/webhook.update', webhook_id = data.webhook["id"]) }}">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-6">
@@ -74,5 +74,40 @@
             </div>
         </div>
     </section>
+
+{% endblock %}
+
+
+{% block script %}
+
+    <script type="text/javascript">
+        $(function () {
+            $("#edit_form").validate({
+                rules: {
+                    school_name: {
+                        required: true,
+                        maxlength: 200,
+                        minlength: 5
+                    },
+                    school_domain: {
+                        required: true,
+                        maxlength: 100,
+                        minlength: 5
+                    },
+                    api_token: {
+                        required: true,
+                        maxlength: 100,
+                        minlength: 5
+                    },
+                    api_url: {
+                        required: true,
+                        maxlength: 200,
+                        minlength: 5
+                    }
+                }
+            });
+        });
+
+    </script>
 
 {% endblock %}
