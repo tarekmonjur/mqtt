@@ -28,6 +28,7 @@
                                     <th>SL</th>
                                     <th>School Name</th>
                                     <th>Device Number</th>
+                                    <th>Device Channel</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -37,6 +38,7 @@
                                         <td>{{ loop.index }}</td>
                                         <td>{{ device['school_name'] }}</td>
                                         <td>{{ device['device_number'] }}</td>
+                                        <td>{{ device['device_channel'] }}</td>
                                         <td>
                                             <a href="{{ url_for('/mapping.edit', device_id = device["id"]) }}" class="btn btn-primary btn-sm">Edit</a>
                                             <a href="{{ url_for('/mapping.delete', device_id = device["id"]) }}" onclick="return checkDelete('Are you sure delete mapping?')" class="btn btn-danger btn-sm">Delete</a>

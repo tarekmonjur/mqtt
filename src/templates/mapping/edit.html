@@ -32,7 +32,7 @@
                             <form id="edit_form" role="form" method="post" action="{{ url_for('/mapping.edit', device_id = data.device["id"]) }}">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <div class="form-group">
                                                 <label for="webhook_id">School Name</label>
                                                 <select class="form-control select2" name="webhook_id" id="webhook_id">
@@ -44,12 +44,21 @@
                                                 <span class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <div class="form-group">
                                                 <label for="device_number">Device Number</label>
                                                 <input type="text" class="form-control" name="device_number"
                                                        id="device_number" value="{{ data.device["device_number"] }}"
                                                        placeholder="Enter Device Number">
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="device_channel">Device Channel</label>
+                                                <input type="text" class="form-control" name="device_channel"
+                                                       id="device_channel" value="{{ data.device["device_channel"] }}"
+                                                       placeholder="Enter Device Channel">
                                                 <span class="text-danger"></span>
                                             </div>
                                         </div>
@@ -80,7 +89,8 @@
                         required: true,
                         maxlength: 20,
                         minlength: 5
-                    }
+                    },
+                    device_channel: "required"
                 }
             });
         });
