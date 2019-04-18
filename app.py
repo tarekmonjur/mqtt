@@ -3,9 +3,68 @@ import json
 import time
 import requests
 from src import create_app
+from src.db import db_connect
 
 
 apiUrl = 'http://school.attendance/api/v1/attendances'
+
+
+def get_webhook(device_id, channel):
+    try:
+        db = db_connect()
+        cursor = db.cursor(dictionary=True)
+        sql = "select * from attendance_webhook.webhooks as w join attendance_webhook.devices as d on d.webhook_id=w.id where d.device_number=%s and d.device_channel=%s"
+        cursor.execute(sql, (device_id, channel))
+        result = cursor.fetchone()
+        return result
+    except:
+        print("db problem")
+    finally:
+        cursor.close()
+        db.close()
+
+
+def get_webhook_by_device(device_id):
+    try:
+        db = db_connect()
+        cursor = db.cursor(dictionary=True)
+        sql = "select * from attendance_webhook.webhooks as w join attendance_webhook.devices as d on d.webhook_id=w.id where d.device_number=%s"
+        cursor.execute(sql, (device_id,))
+        result = cursor.fetchone()
+        return result
+    except:
+        print("db problem")
+    finally:
+        cursor.close()
+        db.close()
+
+
+def get_channel():
+    try:
+        db = db_connect()
+        cursor = db.cursor(dictionary=True)
+        sql = "select device_channel from devices group by device_channel"
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        return result
+    except:
+        print("db problem")
+    finally:
+        cursor.close()
+        db.close()
+
+
+def handle_request(client, deviceId, webhook, jsonPayload):
+    print(jsonPayload)
+    headers = {"api-token": webhook['api_token']}
+    result = requests.post(webhook['api_url'], params=jsonPayload, headers=headers)
+    res = result.json()
+    if res['code'] == 200 and res['status'] == "success":
+        print(res['message'])
+        client.publish(deviceId, '1')
+    else:
+        print(res['message'])
+        client.publish(deviceId, '0')
 
 
 def on_connect(client, userdata, flags, rc):
@@ -13,54 +72,73 @@ def on_connect(client, userdata, flags, rc):
     #print("data " + str(userdata))
     #print("flags " + str(flags))
     #print("client " + str(client))
-    client.subscribe("DBNSCHOOLRFID")
+    client.subscribe('SRFID')
+    channels = get_channel()
+    # print(channels)
+    if channels is not None and len(channels) > 0:
+        for channel in channels:
+            client.subscribe(channel['device_channel'])
+            print(channel['device_channel'])
 
 
 def on_message(client, userdata, message):
     print("Received message '" + str(message.payload) + "' on topic '" + message.topic + "' with QoS " + str(message.qos))
-    if message.topic == "DBNSCHOOLRFID":
-        print(message.payload)
+    messageData = message.payload.split(',')
+    jsonPayload = {}
+    jsonPayload['device_id'] = messageData[0]
+    jsonPayload['rf_id'] = messageData[1]
+    deviceId = messageData[0]
 
-        messageData = message.payload.split(',')
-        jsonPayload = {}
-        jsonPayload['device_id'] = messageData[0]
-        jsonPayload['rf_id'] = messageData[1]
-        deviceId = messageData[0]
+    if message.topic == "SRFID":
+        webhook = get_webhook_by_device(deviceId)
+        if webhook:
+            print(webhook)
+            handle_request(client, deviceId, webhook, jsonPayload)
+    else:
+        webhook = get_webhook(deviceId, message.topic)
+        if webhook:
+            print(webhook)
+            handle_request(client, deviceId, webhook, jsonPayload)
 
-        # jsonPayload = json.loads(message.payload)
-        # print(jsonPayload)
+    # messageData = message.payload.split(',')
+    # jsonPayload = {}
+    # jsonPayload['device_id'] = messageData[0]
+    # jsonPayload['rf_id'] = messageData[1]
+    # deviceId = messageData[0]
 
-        # jsonPayload = json.loads('{"device_id": "00001", "rf_id": "'+message.payload+'"}')
-        # print(jsonPayload['device_id'])
-        # print(jsonPayload['rf_id'])
-        # '{"device_id": "00001", "rf_id": "0012"}'
+    # jsonPayload = json.loads(message.payload)
+    # print(jsonPayload)
 
-        headers = {"api-token": "U7rxIBBOoTcRdrdO4lsKoTb1Vtopxyb81549424252"}
-        # print(headers)
+    # jsonPayload = json.loads('{"device_id": "00001", "rf_id": "'+message.payload+'"}')
+    # print(jsonPayload['device_id'])
+    # print(jsonPayload['rf_id'])
+    # '{"device_id": "00001", "rf_id": "0012"}'
 
-        result = requests.post(apiUrl, params=jsonPayload, headers=headers)
-        res = result.json()
-        if res['code'] == 200 and res['status'] == "success":
-            print(res['message'])
-            client.publish(deviceId, '1')
-        else:
-            print(res['message'])
-            client.publish(deviceId, '0')
+    # headers = {"api-token": "U7rxIBBOoTcRdrdO4lsKoTb1Vtopxyb81549424252"}
+    # # print(headers)
+    #
+    # result = requests.post(apiUrl, params=jsonPayload, headers=headers)
+    # res = result.json()
+    # if res['code'] == 200 and res['status'] == "success":
+    #     print(res['message'])
+    #     client.publish(deviceId, '1')
+    # else:
+    #     print(res['message'])
+    #     client.publish(deviceId, '0')
 
-        # print(res['status'])
-        # print(res['code'])
-        # print(res['title'])
-        # print(res['message'])
+    # print(res['status'])
+    # print(res['code'])
+    # print(res['title'])
+    # print(res['message'])
 
 
-
-# mqttc = mqtt.Client()
-# mqttc.username_pw_set("tarek", password="tarek99")
-# mqttc.on_connect = on_connect
-# mqttc.on_message = on_message
-# mqttc.connect("localhost", 1883, 60, "localhost")
-# mqttc.loop_start()
-# mqttc.loop_forever()
+mqttc = mqtt.Client()
+mqttc.username_pw_set("tarek", password="tarek99")
+mqttc.on_connect = on_connect
+mqttc.on_message = on_message
+mqttc.connect("localhost", 1883, 60, "localhost")
+mqttc.loop_start()
+#mqttc.loop_forever()
 
 
 if __name__ == "__main__":
