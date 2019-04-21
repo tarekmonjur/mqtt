@@ -2,6 +2,7 @@
 from flask import Blueprint, request, render_template, flash, redirect, url_for
 from datetime import datetime
 from db import db_connect
+from client import mqtt_connection
 
 app_name = "Broker & Webhook"
 bp = "/mapping"
@@ -71,6 +72,7 @@ def store():
         flash('Sorry! Device not mapped. Please try again.', 'error')
         return redirect(url_for('/mapping.add'))
     finally:
+        mqtt_connection(1)
         cursor.close()
         db.close()
 
@@ -118,6 +120,7 @@ def update(device_id):
         flash('Sorry! Device not mapped. Please try again.', 'error')
         return redirect(url_for('/mapping.edit', device_id = device_id))
     finally:
+        mqtt_connection(1)
         cursor.close()
         db.close()
 
