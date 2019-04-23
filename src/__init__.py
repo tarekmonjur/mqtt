@@ -22,6 +22,6 @@ def create_app():
     app.register_blueprint(webhook.app)
     app.register_blueprint(mapping.app)
 
-    app.run(host='0.0.0.0', port=8000, debug=True)
-    app.run(threaded=True)
+    app.run(host='0.0.0.0', port=8000, threaded=True)
+    app.run(debug=True)
     return app

@@ -109,8 +109,8 @@ def update(device_id):
         db = db_connect()
         cursor = db.cursor()
         updated_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        sql_query = "UPDATE devices SET webhook_id=%s, device_number=%s, device_channel=%s, updated_at=%s WHERE id=%s"
-        update_data = (input_data['webhook_id'], input_data['device_number'], input_data['device_channel'], updated_at, device_id)
+        sql_query = "UPDATE devices SET webhook_id=%s, device_number=%s, device_channel=%s, old_channel=%s, updated_at=%s WHERE id=%s"
+        update_data = (input_data['webhook_id'], input_data['device_number'], input_data['device_channel'], input_data['old_channel'], updated_at, device_id)
         cursor.execute(sql_query, update_data)
         db.commit()
         flash('Device mapping successfully updated', 'success')

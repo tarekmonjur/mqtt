@@ -39,7 +39,7 @@ def get_channel():
     try:
         db = db_connect()
         cursor = db.cursor(dictionary=True)
-        sql = "select device_channel from devices group by device_channel"
+        sql = "select device_channel, old_channel from devices group by device_channel, old_channel"
         cursor.execute(sql)
         result = cursor.fetchall()
         return result
@@ -73,9 +73,11 @@ def on_connect(client, userdata, flags, rc):
     # print(channels)
     if channels is not None and len(channels) > 0:
         for channel in channels:
-            client.unsubscribe(channel['device_channel'])
             client.subscribe(channel['device_channel'])
-            print(channel['device_channel'])
+            print('new - '+channel['device_channel'])
+            if channel['old_channel'] is not None:
+                client.unsubscribe(channel['old_channel'])
+                print("old - "+channel['old_channel'])
 
 
 def on_disconnect(client, userdata, rc):
@@ -158,10 +160,14 @@ def mqtt_connection(flag=0):
         mqttc.username_pw_set("tarek", password="tarek99")
         mqttc.on_connect = on_connect
         mqttc.on_message = on_message
-        # mqttc.on_disconnect = on_disconnect
+        mqttc.on_disconnect = on_disconnect
+        mqttc.loop_stop()
         mqttc.disconnect()
-        # mqttc.loop_stop()
         mqttc.connect("localhost", 1883, 60, "localhost")
         mqttc.reconnect()
-        # mqttc.loop_start()
+        mqttc.loop_start()
         print("flag 1")
+
+
+if __name__ == "__main__":
+    mqtt_connection(0)

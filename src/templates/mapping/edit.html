@@ -30,6 +30,7 @@
 
                         <div class="card-body">
                             <form id="edit_form" role="form" method="post" action="{{ url_for('/mapping.edit', device_id = data.device["id"]) }}">
+                                <input type="hidden" name="old_channel" value="{{ data.device["device_channel"] }}">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-4">
