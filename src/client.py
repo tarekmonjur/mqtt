@@ -68,16 +68,18 @@ def on_connect(client, userdata, flags, rc):
     #print("data " + str(userdata))
     #print("flags " + str(flags))
     #print("client " + str(client))
+    client.unsubscribe('#')
     client.subscribe('SRFID')
     channels = get_channel()
     # print(channels)
     if channels is not None and len(channels) > 0:
         for channel in channels:
-            client.subscribe(channel['device_channel'])
-            print('new - '+channel['device_channel'])
             if channel['old_channel'] is not None:
                 client.unsubscribe(channel['old_channel'])
                 print("old - "+channel['old_channel'])
+
+            client.subscribe(channel['device_channel'])
+            print('new - ' + channel['device_channel'])
 
 
 def on_disconnect(client, userdata, rc):
@@ -147,7 +149,7 @@ def on_message(client, userdata, message):
 
 def mqtt_connection(flag=0):
     if flag == 0:
-        mqttc = mqtt.Client(client_id="", clean_session=True)
+        mqttc = mqtt.Client(client_id="tk", clean_session=True)
         mqttc.username_pw_set("tarek", password="tarek99")
         mqttc.on_connect = on_connect
         mqttc.on_message = on_message
@@ -156,7 +158,7 @@ def mqtt_connection(flag=0):
         # mqttc.loop_forever()
         print("flag 0")
     elif flag == 1:
-        mqttc = mqtt.Client(client_id="", clean_session=True)
+        mqttc = mqtt.Client(client_id="tk", clean_session=True)
         mqttc.username_pw_set("tarek", password="tarek99")
         mqttc.on_connect = on_connect
         mqttc.on_message = on_message
@@ -165,7 +167,7 @@ def mqtt_connection(flag=0):
         mqttc.disconnect()
         mqttc.connect("localhost", 1883, 60, "localhost")
         mqttc.reconnect()
-        mqttc.loop_start()
+        # mqttc.loop_start()
         print("flag 1")
 
 

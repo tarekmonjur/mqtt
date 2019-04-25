@@ -6,7 +6,7 @@ from client import mqtt_connection
 
 app_name = "Broker & Webhook"
 bp = "/mapping"
-app = Blueprint(bp, __name__, url_prefix='/')
+app = Blueprint(bp, __name__, url_prefix='')
 
 
 @app.route(bp+'/index', methods=['GET'])

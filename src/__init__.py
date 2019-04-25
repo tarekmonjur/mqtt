@@ -13,6 +13,7 @@ def auth_check():
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'secret!'
+    app.url_map.strict_slashes = False
 
     mapping.app.before_request(auth_check)
     webhook.app.before_request(auth_check)

@@ -5,7 +5,7 @@ from db import db_connect
 
 app_name = "Broker & Webhook"
 bp = "/webhook"
-app = Blueprint(bp, __name__, url_prefix='/')
+app = Blueprint(bp, __name__, url_prefix='')
 
 
 @app.route(bp+'/index', methods=['GET'])

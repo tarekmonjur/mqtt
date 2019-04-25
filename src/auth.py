@@ -5,7 +5,7 @@ from db import db_connect, guest_required, login_required
 
 app_name = "Broker & Webhook"
 bp = "/auth"
-app = Blueprint(bp, __name__, url_prefix='/')
+app = Blueprint(bp, __name__, url_prefix='')
 
 
 @app.route('/login', methods=['GET', 'POST'])
